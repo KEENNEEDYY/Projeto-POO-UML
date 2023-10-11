@@ -9,77 +9,25 @@ Este é um modelo representativo do Smartphone herdando funcionalidades conforme
 # Programa
 
 ```java
-import java.util.ArrayList;
-import java.util.List;
-
-// Classe MediaPlayer
-class MediaPlayer {
-    private List<String> listaDeMusicas;
-    private String musicaAtual;
-
-    public MediaPlayer() {
-        listaDeMusicas = new ArrayList<>();
-        musicaAtual = "";
-    }
-
-    public void tocar() {
-        System.out.println("Tocando música");
-    }
-
-    public void pausar() {
-        System.out.println("Pausando música");
-    }
-
-    public void selecionarMusica(String musica) {
-        musicaAtual = musica;
-        System.out.println("Selecionando música: " + musica);
-    }
+// Interface para funcionalidades de um reprodutor musical
+interface ReprodutorMusical {
+    void tocar();
+    void pausar();
+    void selecionarMusica(String musica);
 }
 
-// Classe Phone
-class Phone {
-    private String numero;
-    private CorreioDeVoz correioVoz;
-
-    public Phone() {
-        numero = "";
-        correioVoz = new CorreioDeVoz();
-    }
-
-    public void ligar() {
-        System.out.println("Realizando chamada");
-    }
-
-    public void atender() {
-        System.out.println("Atendendo chamada");
-    }
-
-    public void iniciarCorreioVoz() {
-        System.out.println("Iniciando correio de voz");
-        correioVoz.iniciarGravacao();
-    }
+// Interface para funcionalidades de um telefone com correio de voz
+interface TelefoneComCorreioVoz {
+    void ligar();
+    void atender();
+    void iniciarCorreioVoz();
 }
 
-// Classe Browser
-class Browser {
-    private List<Aba> listaDeAbas;
-
-    public Browser() {
-        listaDeAbas = new ArrayList<>();
-    }
-
-    public void adicionarNovaAba(Aba aba) {
-        listaDeAbas.add(aba);
-        System.out.println("Nova aba adicionada com URL: " + aba.getUrl());
-    }
-
-    public void exibirPagina(String url) {
-        System.out.println("Exibindo página: " + url);
-    }
-
-    public void atualizarPagina() {
-        System.out.println("Atualizando página");
-    }
+// Interface para funcionalidades de um navegador de internet
+interface NavegadorInternet {
+    void adicionarNovaAba(Aba aba);
+    void exibirPagina(String url);
+    void atualizarPagina();
 }
 
 // Classe CorreioDeVoz
@@ -108,8 +56,58 @@ class Aba {
     }
 }
 
-// Classe Smartphone que herda métodos das outras classes
-class Smartphone extends MediaPlayer, Phone, Browser {
+// Classe Smartphone que implementa as interfaces
+class Smartphone implements ReprodutorMusical, TelefoneComCorreioVoz, NavegadorInternet {
+    private CorreioDeVoz correioDeVoz;
+
+    public Smartphone() {
+        correioDeVoz = new CorreioDeVoz();
+    }
+
+    @Override
+    public void tocar() {
+        System.out.println("Tocando música");
+    }
+
+    @Override
+    public void pausar() {
+        System.out.println("Pausando música");
+    }
+
+    @Override
+    public void selecionarMusica(String musica) {
+        System.out.println("Selecionando música: " + musica);
+    }
+
+    @Override
+    public void ligar() {
+        System.out.println("Realizando chamada");
+    }
+
+    @Override
+    public void atender() {
+        System.out.println("Atendendo chamada");
+    }
+
+    @Override
+    public void iniciarCorreioVoz() {
+        correioDeVoz.iniciarGravacao();
+    }
+
+    @Override
+    public void adicionarNovaAba(Aba aba) {
+        System.out.println("Nova aba adicionada com URL: " + aba.getUrl());
+    }
+
+    @Override
+    public void exibirPagina(String url) {
+        System.out.println("Exibindo página: " + url);
+    }
+
+    @Override
+    public void atualizarPagina() {
+        System.out.println("Atualizando página");
+    }
 }
 
 // Classe principal com o método main
@@ -131,4 +129,5 @@ public class Main {
         smartphone.atualizarPagina();
     }
 }
+
 ```
